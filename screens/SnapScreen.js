@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Svg, { Polygon, Line } from "react-native-svg";
 import { Camera } from "expo-camera";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { setImage } from "../reducers/clothes";
 import { CLOUDINARY_URL } from "@env";
