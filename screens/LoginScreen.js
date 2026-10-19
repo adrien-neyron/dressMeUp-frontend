@@ -4,6 +4,7 @@ import {
   Image,
   Dimensions,
   View,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -33,13 +34,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   imgContainer: {
+    width: "100%",
     paddingBottom: "10%",
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
-    width: "50%",
-    height: undefined,
-    aspectRatio: 1, // Permet de conserver les proportions de l'image pour qu'elle ne soit pas déformée
-  },
+  image: Platform.OS === "web"
+    ? {
+        // Sur le web, aspectRatio est ignoré ici : le logo s'étirait sur toute la hauteur
+        // et repoussait le formulaire hors de l'écran. Taille explicite (carrée).
+        width: windowWidth * 0.5,
+        height: windowWidth * 0.5,
+      }
+    : {
+        width: "50%",
+        height: undefined,
+        aspectRatio: 1, // Permet de conserver les proportions de l'image pour qu'elle ne soit pas déformée
+      },
 });

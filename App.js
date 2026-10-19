@@ -1,8 +1,10 @@
+import "./webFrame";
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Font from "expo-font";
-import { LogBox, Text } from "react-native";
+import { LogBox, Text, View, Platform, StyleSheet } from "react-native";
+import { WEB_FRAME_MAX_WIDTH } from "./webFrame";
 LogBox.ignoreAllLogs();
 
 const fetchFonts = async () => {
@@ -98,7 +100,9 @@ export default function App() {
   return <Text>Loading...</Text>;
 }
 
-  return (    
+  return (
+    <View style={styles.page}>
+    <View style={styles.frame}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
@@ -134,5 +138,23 @@ export default function App() {
         </NavigationContainer>
       </PersistGate>
     </Provider>
+    </View>
+    </View>
   );
 }
+
+// Sur le web, l'app est centrée dans un cadre de largeur "téléphone".
+// Sur mobile (Expo Go), ces styles n'ont aucun effet de mise en page.
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: Platform.OS === "web" ? "#dfe8e4" : undefined,
+  },
+  frame: {
+    flex: 1,
+    width: "100%",
+    maxWidth: Platform.OS === "web" ? WEB_FRAME_MAX_WIDTH : undefined,
+    overflow: "hidden",
+  },
+});
